@@ -17,7 +17,7 @@
  */
 ?>
 <div class="<?php echo $pluralVar; ?> form">
-<?php echo "<?php echo \$this->Form->create('{$modelClass}'); ?>\n"; ?>
+<?php echo "<?php echo \$this->Form->create('{$modelClass}', array('role'=>'form')); ?>\n"; ?>
 	<fieldset>
 		<legend><?php printf("<?php echo __('%s %s'); ?>", Inflector::humanize($action), $singularHumanName); ?></legend>
 <?php
@@ -26,21 +26,26 @@
 			if (strpos($action, 'add') !== false && $field == $primaryKey) {
 				continue;
 			} elseif (!in_array($field, array('created', 'modified', 'updated'))) {
-				echo "\t\techo \$this->Form->input('{$field}');\n";
+				echo "\t\techo \$this->Form->input('{$field}', array('div' => array('class' => 'form-group'), 'class' => 'form-control'));\n";
 			}
 		}
 		if (!empty($associations['hasAndBelongsToMany'])) {
 			foreach ($associations['hasAndBelongsToMany'] as $assocName => $assocData) {
-				echo "\t\techo \$this->Form->input('{$assocName}');\n";
+				echo "\t\techo \$this->Form->input('{$assocName}', array('div' => array('class' => 'form-group'), 'class' => 'form-control'));\n";
 			}
 		}
 		echo "\t?>\n";
 ?>
 	</fieldset>
 <?php
-	echo "<?php echo \$this->Form->end(__('Submit')); ?>\n";
+	echo "<?php echo \$this->Form->end(array('label' =>__('Submit'), 'class' => 'btn btn-primary')); ?>\n";
 ?>
 </div>
+<?php
+		echo "<?php\n";
+		echo "\t\$this->start('left_area');\n";
+		echo "\t?>\n";
+	?>
 <div class="actions">
 	<h3><?php echo "<?php echo __('Actions'); ?>"; ?></h3>
 	<ul>
@@ -63,3 +68,9 @@
 ?>
 	</ul>
 </div>
+
+<?php
+		echo "<?php\n";
+		echo "\t\$this->end();\n";
+		echo "\t?>\n";
+	?>

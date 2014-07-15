@@ -1,59 +1,130 @@
 <?php
-/**
- * Static content controller.
- *
- * This file will render views from views/pages/
- *
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @package       app.Controller
- * @since         CakePHP(tm) v 0.2.9
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
- */
-
 App::uses('AppController', 'Controller');
-
 /**
- * Static content controller
+ * Pages Controller
  *
- * Override this controller by placing a copy in controllers directory of an application
- *
- * @package       app.Controller
- * @link http://book.cakephp.org/2.0/en/controllers/pages-controller.html
+ * @property Page $Page
+ * @property PaginatorComponent $Paginator
  */
 class PagesController extends AppController {
 
 /**
- * This controller does not use a model
+ * Components
  *
  * @var array
  */
-	public $uses = array();
+	public $components = array('Paginator');
 
 /**
- * Displays a view
+ * index method
  *
- * @param mixed What page to display
  * @return void
- * @throws NotFoundException When the view file could not be found
- *	or MissingViewException in debug mode.
  */
+	public function index() {
+		$this->Page->recursive = 0;
+		$this->set('pages', $this->Paginator->paginate());
+	}
+
+/**
+ * view method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ * @return void
+ */
+	public function view($id = null) {
+		if (!$this->Page->exists($id)) {
+			throw new NotFoundException(__('Invalid page'));
+		}
+		$options = array('conditions' => array('Page.' . $this->Page->primaryKey => $id));
+		$this->set('page', $this->Page->find('first', $options));
+	}
+
+/**
+ * add method
+ *
+ * @return void
+ */
+	public function add() {
+		if ($this->request->is('post')) {
+			$this->Page->create();
+			if ($this->Page->save($this->request->data)) {
+				$this->Session->setFlash(__('The page has been saved.'));
+				return $this->redirect(array('action' => 'index'));
+			} else {
+				$this->Session->setFlash(__('The page could not be saved. Please, try again.'));
+			}
+		}
+		$users = $this->Page->User->find('list');
+		$pageGroups = $this->Page->PageGroup->find('list');
+		$this->set(compact('users', 'pageGroups'));
+	}
+
+/**
+ * edit method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ * @return void
+ */
+	public function edit($id = null) {
+		if (!$this->Page->exists($id)) {
+			throw new NotFoundException(__('Invalid page'));
+		}
+		if ($this->request->is(array('post', 'put'))) {
+			if ($this->Page->save($this->request->data)) {
+				$this->Session->setFlash(__('The page has been saved.'));
+				return $this->redirect(array('action' => 'index'));
+			} else {
+				$this->Session->setFlash(__('The page could not be saved. Please, try again.'));
+			}
+		} else {
+			$options = array('conditions' => array('Page.' . $this->Page->primaryKey => $id));
+			$this->request->data = $this->Page->find('first', $options);
+		}
+		$users = $this->Page->User->find('list');
+		$pageGroups = $this->Page->PageGroup->find('list');
+		$this->set(compact('users', 'pageGroups'));
+	}
+
+/**
+ * delete method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ * @return void
+ */
+	public function delete($id = null) {
+		$this->Page->id = $id;
+		if (!$this->Page->exists()) {
+			throw new NotFoundException(__('Invalid page'));
+		}
+		$this->request->onlyAllow('post', 'delete');
+		if ($this->Page->delete()) {
+			$this->Session->setFlash(__('The page has been deleted.'));
+		} else {
+			$this->Session->setFlash(__('The page could not be deleted. Please, try again.'));
+		}
+		return $this->redirect(array('action' => 'index'));
+	}
+
+	/**
+	 * Displays a view
+	 *
+	 * @param mixed What page to display
+	 * @return void
+	 * @throws NotFoundException When the view file could not be found
+	 *	or MissingViewException in debug mode.
+	 */
 	public function display() {
 		$path = func_get_args();
-
+	
 		$count = count($path);
 		if (!$count) {
 			return $this->redirect('/');
 		}
 		$page = $subpage = $title_for_layout = null;
-
+	
 		if (!empty($path[0])) {
 			$page = $path[0];
 		}
@@ -64,7 +135,7 @@ class PagesController extends AppController {
 			$title_for_layout = Inflector::humanize($path[$count - 1]);
 		}
 		$this->set(compact('page', 'subpage', 'title_for_layout'));
-
+	
 		try {
 			$this->render(implode('/', $path));
 		} catch (MissingViewException $e) {
@@ -77,6 +148,7 @@ class PagesController extends AppController {
 	
 	
 	public function check(){
-		
+	
 	}
+	
 }

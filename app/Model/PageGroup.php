@@ -1,11 +1,12 @@
 <?php
 App::uses('AppModel', 'Model');
 /**
- * Menu Model
+ * PageGroup Model
  *
  * @property User $User
+ * @property Page $Page
  */
-class Menu extends AppModel {
+class PageGroup extends AppModel {
 
 /**
  * Display field
@@ -23,26 +24,6 @@ class Menu extends AppModel {
 		'name' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'slug' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'sequence' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -68,4 +49,26 @@ class Menu extends AppModel {
 			'order' => ''
 		)
 	);
+
+/**
+ * hasMany associations
+ *
+ * @var array
+ */
+	public $hasMany = array(
+		'Page' => array(
+			'className' => 'Page',
+			'foreignKey' => 'page_group_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		)
+	);
+
 }

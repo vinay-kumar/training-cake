@@ -1,6 +1,6 @@
 <div class="menus view">
 <h2><?php echo __('Menu'); ?></h2>
-	<dl>
+	<dl  class="dl-horizontal">
 		<dt><?php echo __('Id'); ?></dt>
 		<dd>
 			<?php echo h($menu['Menu']['id']); ?>
@@ -53,6 +53,10 @@
 		</dd>
 	</dl>
 </div>
+<?php
+	$this->start('left_area');
+	?>
+
 <div class="actions">
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
@@ -64,3 +68,8 @@
 		<li><?php echo $this->Html->link(__('New User'), array('controller' => 'users', 'action' => 'add')); ?> </li>
 	</ul>
 </div>
+
+<?php
+	$this->end();
+	?>
+

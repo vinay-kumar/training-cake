@@ -1,11 +1,12 @@
 <?php
 App::uses('AppModel', 'Model');
 /**
- * Menu Model
+ * Page Model
  *
  * @property User $User
+ * @property PageGroup $PageGroup
  */
-class Menu extends AppModel {
+class Page extends AppModel {
 
 /**
  * Display field
@@ -30,26 +31,6 @@ class Menu extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'slug' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'sequence' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
@@ -63,6 +44,13 @@ class Menu extends AppModel {
 		'User' => array(
 			'className' => 'User',
 			'foreignKey' => 'user_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
+		'PageGroup' => array(
+			'className' => 'PageGroup',
+			'foreignKey' => 'page_group_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
