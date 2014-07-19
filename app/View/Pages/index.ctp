@@ -4,20 +4,17 @@
 	<tr>
 			<th><?php echo $this->Paginator->sort('id'); ?></th>
 			<th><?php echo $this->Paginator->sort('name'); ?></th>
-			<th><?php echo $this->Paginator->sort('description'); ?></th>
 			<th><?php echo $this->Paginator->sort('modified'); ?></th>
 			<th><?php echo $this->Paginator->sort('created'); ?></th>
 			<th><?php echo $this->Paginator->sort('user_id'); ?></th>
 			<th><?php echo $this->Paginator->sort('page_group_id'); ?></th>
 			<th><?php echo $this->Paginator->sort('status'); ?></th>
-			<th><?php echo $this->Paginator->sort('page_content'); ?></th>
 			<th class="actions"><?php echo __('Actions'); ?></th>
 	</tr>
 	<?php foreach ($pages as $page): ?>
 	<tr>
 		<td><?php echo h($page['Page']['id']); ?>&nbsp;</td>
 		<td><?php echo h($page['Page']['name']); ?>&nbsp;</td>
-		<td><?php echo h($page['Page']['description']); ?>&nbsp;</td>
 		<td><?php echo h($page['Page']['modified']); ?>&nbsp;</td>
 		<td><?php echo h($page['Page']['created']); ?>&nbsp;</td>
 		<td>
@@ -27,7 +24,6 @@
 			<?php echo $this->Html->link($page['PageGroup']['name'], array('controller' => 'page_groups', 'action' => 'view', $page['PageGroup']['id'])); ?>
 		</td>
 		<td><?php echo h($page['Page']['status']); ?>&nbsp;</td>
-		<td><?php echo h($page['Page']['page_content']); ?>&nbsp;</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $page['Page']['id'])); ?>
 			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $page['Page']['id'])); ?>

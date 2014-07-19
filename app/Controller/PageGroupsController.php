@@ -38,6 +38,10 @@ class PageGroupsController extends AppController {
 		}
 		$options = array('conditions' => array('PageGroup.' . $this->PageGroup->primaryKey => $id));
 		$this->set('pageGroup', $this->PageGroup->find('first', $options));
+
+		$options = array('conditions' => array('Page.page_group_id' => $id, 
+												'Page.status' => 'Active'));
+		$this->set('pages', $this->PageGroup->Page->find('first', $options));
 	}
 
 /**
