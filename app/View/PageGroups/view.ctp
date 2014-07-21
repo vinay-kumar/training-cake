@@ -1,43 +1,43 @@
-<div class="pageGroups view">
-<h2><?php echo __('Page Group'); ?></h2>
-	<dl  class="dl-horizontal">
-		<dt><?php echo __('Id'); ?></dt>
-		<dd>
-			<?php echo h($pageGroup['PageGroup']['id']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Name'); ?></dt>
-		<dd>
-			<?php echo h($pageGroup['PageGroup']['name']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Description'); ?></dt>
-		<dd>
-			<?php echo h($pageGroup['PageGroup']['description']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Modified'); ?></dt>
-		<dd>
-			<?php echo h($pageGroup['PageGroup']['modified']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Created'); ?></dt>
-		<dd>
-			<?php echo h($pageGroup['PageGroup']['created']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('User'); ?></dt>
-		<dd>
-			<?php echo $this->Html->link($pageGroup['User']['username'], array('controller' => 'users', 'action' => 'view', $pageGroup['User']['id'])); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Status'); ?></dt>
-		<dd>
-			<?php echo h($pageGroup['PageGroup']['status']); ?>
-			&nbsp;
-		</dd>
-	</dl>
+<h1><?php echo h($pageGroup['PageGroup']['name']); ?></h1>
+
+<div class="row">
+<div class="col-md-12">
+			<?php echo ($pageGroup['PageGroup']['description']); ?>
 </div>
+</div>
+
+<p>created by: <?php echo $this->Html->link($pageGroup['User']['username'], array('controller' => 'users', 'action' => 'view', $pageGroup['User']['id'])); ?> on <?php echo h($pageGroup['PageGroup']['created']); ?> updated on <?php echo h($pageGroup['PageGroup']['modified']); ?></p>
+
+<div class="panel panel-default">
+  <div class="panel-heading">Group Pages</div>
+  <div class="panel-body">
+  <?php foreach ($pages as  $page):?>
+<div class="panel panel-primary">
+  <div class="panel-heading"><?php echo h($page['Page']['name']); ?></div>
+  <div class="panel-body">
+    <?php echo ($page['Page']['description']); ?>
+    <p><?php echo $this->Html->link(__('read more>>'), array('controller' => 'pages', 'action' => 'view', $page['Page']['id'])); ?></p>
+  </div>
+</div>
+<?php endforeach;?>
+
+	<p>
+	<?php
+	echo $this->NewPaginator->counter(array(
+	'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
+	));
+	?>	</p>
+	<ul class="pagination">
+	<?php
+		echo $this->NewPaginator->prev('< ' . __('previous'), array(), null, array('class' => 'disabled'));
+		echo $this->NewPaginator->numbers(array('separator' => ''));
+		echo $this->NewPaginator->next(__('next') . ' >', array(), null, array('class' => 'disabled'));
+	?>
+	</ul>
+</div>
+</div>
+
+
 <?php
 	$this->start('left_area');
 	?>
