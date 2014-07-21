@@ -71,6 +71,7 @@ class PagesController extends AppController {
 		if (!$this->Page->exists($id)) {
 			throw new NotFoundException(__('Invalid page'));
 		}
+		$this->helpers[] = 'NewForm';
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Page->save($this->request->data)) {
 				$this->Session->setFlash(__('The page has been saved.'));

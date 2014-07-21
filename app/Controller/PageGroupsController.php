@@ -36,6 +36,7 @@ class PageGroupsController extends AppController {
 		if (!$this->PageGroup->exists($id)) {
 			throw new NotFoundException(__('Invalid page group'));
 		}
+		$this->PageGroup->recursive = 0;
 		$options = array('conditions' => array('PageGroup.' . $this->PageGroup->primaryKey => $id));
 		$this->set('pageGroup', $this->PageGroup->find('first', $options));
 
