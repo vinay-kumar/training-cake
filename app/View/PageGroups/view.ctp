@@ -23,15 +23,15 @@
 
 	<p>
 	<?php
-	echo $this->NewPaginator->counter(array(
+	echo $this->Paginator->counter(array(
 	'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
 	));
 	?>	</p>
 	<ul class="pagination">
 	<?php
-		echo $this->NewPaginator->prev('< ' . __('previous'), array(), null, array('class' => 'disabled'));
-		echo $this->NewPaginator->numbers(array('separator' => ''));
-		echo $this->NewPaginator->next(__('next') . ' >', array(), null, array('class' => 'disabled'));
+		echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'disabled'));
+		echo $this->Paginator->numbers(array('separator' => ''));
+		echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'disabled'));
 	?>
 	</ul>
 </div>

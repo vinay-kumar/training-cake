@@ -36,10 +36,12 @@ class PageGroupsController extends AppController {
 		if (!$this->PageGroup->exists($id)) {
 			throw new NotFoundException(__('Invalid page group'));
 		}
+		//Good way to format print_r debug()
 		$this->PageGroup->recursive = 0;
 		$options = array('conditions' => array('PageGroup.' . $this->PageGroup->primaryKey => $id));
 		$this->set('pageGroup', $this->PageGroup->find('first', $options));
 
+		$this->Paginator->settings = array('maxLimit'=>1);
 		$options = array('Page.page_group_id' => $id, 'Page.status' => 'Active');
 		$this->set('pages', $this->Paginator->paginate('Page', $options));
 	}
