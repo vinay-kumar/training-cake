@@ -17,6 +17,8 @@ CREATE TABLE IF NOT EXISTS `menus` (
   `created` datetime DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
   `status` varchar(255) DEFAULT NULL,
+  `parent_type` varchar(255) DEFAULT NULL,
+  `parent_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Menu''s Table' AUTO_INCREMENT=6 ;
 

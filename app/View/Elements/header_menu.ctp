@@ -23,12 +23,12 @@
 				foreach ($header_menus as $key => $header_menu)
 				{
 					
-					$par = (isset($this->request->params['pass'][0]))?$this->request->params['pass'][0]:6;
+					$par = (isset($this->request->params['pass'][0]))?$this->request->params['pass'][0]:'';
 					//print_r($this->request->params['pass']);
 					//print_r($header_menu);
-					echo '<li class="'.(($header_menu['Menu']['slug'] == '/'.$this->request->params['controller'].'/view/'.$par)?'active':'').'">';
+					echo '<li class="'.(($this->request->params['controller'] == $header_menu['Menu']['parent_type'] && $this->request->params['action'] == 'name')?'active':'').'">';
 					
-					echo $this->Html->link($header_menu['Menu']['name'], $header_menu['Menu']['slug']);
+					echo $this->Html->link($header_menu['Menu']['name'], '/'.$header_menu['Menu']['parent_type'].'/name/'.$header_menu['Menu']['id'].'/'.$header_menu['Menu']['slug']);
 					
 					echo '</li>';
 				}

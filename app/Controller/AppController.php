@@ -40,4 +40,23 @@ class AppController extends Controller {
 				)
 		);
 	}
+	
+	public function name($id=null, $slug = null){
+	
+		if (!isset($this->Menu)) {
+	
+			$this->loadModel('Menu');
+	
+		}
+	
+		if (!$this->Menu->exists($id)) {
+			throw new NotFoundException(__('Invalid menu'));
+		}
+	
+		$menu = $this->Menu->find('first', array('conditions' => array('Menu.id'=>$id)));
+	
+		$this->view($menu['Menu']['parent_id']);
+	
+	}	
+
 }

@@ -9,6 +9,8 @@
 		echo $this->Form->input('sequence', array('div' => array('class' => 'form-group'), 'class' => 'form-control'));
 		echo $this->Form->input('description', array('div' => array('class' => 'form-group'), 'class' => 'form-control'));
 		echo $this->Form->input('user_id', array('div' => array('class' => 'form-group'), 'class' => 'form-control'));
+		echo $this->Form->input('parent_type', array('options'=>array(''=>'Select Parent', 'page_groups' => 'Page Group', 'pages' => 'Page', 'features' => 'Featured'), 'div' => array('class' => 'form-group'), 'class' => 'form-control'));
+		echo $this->Form->input('parent_id', array('div' => array('class' => 'form-group'), 'class' => 'form-control'));
 		echo $this->Form->input('status', array('div' => array('class' => 'form-group'), 'class' => 'form-control'));
 	?>
 	</fieldset>
@@ -30,3 +32,10 @@
 <?php
 	$this->end();
 	?>
+	
+	<?php $this->start('script_bottom');?>
+	
+	
+	
+	
+<?php $this->end();?>
