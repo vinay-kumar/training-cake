@@ -9,7 +9,7 @@
 		echo $this->Form->input('sequence', array('div' => array('class' => 'form-group'), 'class' => 'form-control'));
 		echo $this->Form->input('description', array('div' => array('class' => 'form-group'), 'class' => 'form-control'));
 		echo $this->Form->input('user_id', array('div' => array('class' => 'form-group'), 'class' => 'form-control'));
-		echo $this->Form->input('parent_type', array('options'=>array(''=>'Select Parent', 'page_groups' => 'Page Group', 'pages' => 'Page', 'features' => 'Featured'), 'div' => array('class' => 'form-group'), 'class' => 'form-control'));
+		echo $this->Form->input('parent_type', array('onchange' => 'populate_parent(this.value)', 'options'=>array(''=>'Select Parent', 'page_groups' => 'Page Group', 'pages' => 'Page', 'features' => 'Featured'), 'div' => array('class' => 'form-group'), 'class' => 'form-control'));
 		echo $this->Form->input('parent_id', array('div' => array('class' => 'form-group'), 'class' => 'form-control'));
 		echo $this->Form->input('status', array('div' => array('class' => 'form-group'), 'class' => 'form-control'));
 	?>
@@ -34,8 +34,25 @@
 	?>
 	
 	<?php $this->start('script_bottom');?>
-	
-	
+<script type="text/javascript">
+<!--
+function populate_parent(val, id){
+	$.ajax({
+		'url': '<?php echo $this->webroot;?>/menus/populate/'+val,
+		'success': function(res){
+			if(objs = $.parseJSON(res)){
+				var options = '';
+				for(obj in objs){
+					options += '<option value="'+obj+'">'+ objs[obj] +'</option>';
+				}
+				$('#MenuParentId').html(options);
+				console.log(options);
+			}
+		}
+	});
+}
+//-->
+</script>
 	
 	
 <?php $this->end();?>

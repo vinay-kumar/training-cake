@@ -15,7 +15,18 @@ class MenusController extends AppController {
  */
 	public $components = array('Paginator');
 
-	
+	public function populate($table = ''){
+		
+		if (empty($table)) {
+			echo '{}'; exit;
+		}
+		
+		$modelName = Inflector::classify($table);
+		$this->loadModel($modelName);
+		
+		echo json_encode($this->$modelName->find('list'));
+		exit;	
+	}
 	
 	public function header_menu() {
 		
