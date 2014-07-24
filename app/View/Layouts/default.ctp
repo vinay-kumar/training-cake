@@ -35,6 +35,8 @@ echo $this->Html->css('bootstrap.min');
 
 echo $this->fetch('meta');
 echo $this->fetch('css');
+echo $this->Html->script('jquery.js');
+echo $this->Html->script('bootstrap.min.js');
 echo $this->fetch('script');
 ?>
 </head>
@@ -83,9 +85,7 @@ echo $this->fetch('script');
 
 
 
-		<?php echo $this->Html->script('jquery.js');?>
-		<?php echo $this->Html->script('bootstrap.min.js');?>
 		<?php echo $this->fetch('script_bottom');?>
-		
+		<?php echo $this->Js->writeBuffer();?>
 </body>
 </html>

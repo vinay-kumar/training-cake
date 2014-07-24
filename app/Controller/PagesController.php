@@ -14,7 +14,8 @@ class PagesController extends AppController {
  * @var array
  */
 	public $components = array('Paginator');
-
+	
+	public $helpers = array('Js' => array('Jquery'));
 /**
  * index method
  *
