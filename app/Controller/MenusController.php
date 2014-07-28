@@ -45,7 +45,7 @@ class MenusController extends AppController {
 		
 		$menu = $this->Menu->find('first', $options);
 		
-		$this->redirect(array('controller'=>$menu['Menu']['parent_type'], 'action' => 'name',$menu['Menu']['parent_id'],$menu['Menu']['slug']));
+		$this->redirect(array('controller'=>$menu['Menu']['parent_type'], 'action' => 'name',$menu['Menu']['id'],$menu['Menu']['slug']));
 		
 	}
 	
