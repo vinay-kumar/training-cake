@@ -56,7 +56,7 @@ class AppController extends Controller {
 		$menu = $this->Menu->find('first', array('conditions' => array('Menu.id'=>$id)));
 	
 		$this->view($menu['Menu']['parent_id']);
-	
+		$this->render('view');
 	}	
 
 }

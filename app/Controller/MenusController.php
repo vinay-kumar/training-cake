@@ -39,6 +39,15 @@ class MenusController extends AppController {
 		
 	}
 	
+	public function default_page() {
+	
+		$options = array('conditions' => array('Menu.status' => 'Active', 'default' => 1));
+		
+		$menu = $this->Menu->find('first', $options);
+		
+		$this->redirect(array('controller'=>$menu['Menu']['parent_type'], 'action' => 'name',$menu['Menu']['parent_id'],$menu['Menu']['slug']));
+		
+	}
 	
 /**
  * index method
