@@ -14,7 +14,12 @@ class MenusController extends AppController {
  * @var array
  */
 	public $components = array('Paginator');
-
+	
+	public function beforeFilter(){
+		parent::beforeFilter();
+		$this->Auth->allow('populate', 'header_menu', 'default_page');
+	}
+	
 	public function populate($table = ''){
 		
 		if (empty($table)) {
@@ -41,7 +46,7 @@ class MenusController extends AppController {
 	
 	public function default_page() {
 	
-		$options = array('conditions' => array('Menu.status' => 'Active', 'default' => 1));
+		$options = array('conditions' => array('Menu.status' => 'Active', 'Menu.default' => 1));
 		
 		$menu = $this->Menu->find('first', $options);
 		

@@ -33,12 +33,35 @@ App::uses('Controller', 'Controller');
 class AppController extends Controller {
 	
 	
-	public function beforeFilter(){
+    public $components = array(
+        'Session',
+        'Auth' => array(
+            'loginRedirect' => array(
+                'controller' => 'pages',
+                'action' => 'index'
+            ),
+            'logoutRedirect' => array(
+                'controller' => 'pages',
+                'action' => 'index',
+                'home'
+            ),
+            'authenticate' => array(
+                'Form' => array(
+                    'passwordHasher' => 'Blowfish'
+                )
+            ),
+        		
+        )
+    );
+
+
+    public function beforeFilter(){
 		$this->helpers = array(
 				'Paginator' => array(
 						'className' => 'NewPaginator'
 				)
 		);
+		$this->Auth->allow('name', 'view', 'index');
 	}
 	
 	public function name($id=null, $slug = null){
