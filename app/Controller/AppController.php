@@ -29,43 +29,87 @@ App::uses('Controller', 'Controller');
  *
  * @package		app.Controller
  * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
- */
+*/
 class AppController extends Controller {
-	
-	
-    public $components = array(
-        'Session',
-        'Auth' => array(
-            'loginRedirect' => array(
-                'controller' => 'pages',
-                'action' => 'index'
-            ),
-            'logoutRedirect' => array(
-                'controller' => 'pages',
-                'action' => 'index',
-                'home'
-            ),
-            'authenticate' => array(
-                'Form' => array(
-                    'passwordHasher' => 'Blowfish'
-                )
-            ),
-        	'authorize' => array('Controller')
-        )
-    );
 
-    public function isAuthorized($user) {
-    	// Admin can access every action
-    	if (isset($user['role']) && $user['role'] === 'admin') {
-    		return true;
-    	}
-    	$this->Session->setFlash(__('You Do Not Have Access To This Area.'), 'failure');
-    	// Default deny
-    	return false;
-    }
-    
-    
-    public function beforeFilter(){
+
+	public $searchFields = array();
+
+
+	public $components = array(
+			'Session',
+			'Auth' => array(
+					'loginRedirect' => array(
+							'controller' => 'pages',
+							'action' => 'index'
+					),
+					'logoutRedirect' => array(
+							'controller' => 'pages',
+							'action' => 'index',
+							'home'
+					),
+					'authenticate' => array(
+							'Form' => array(
+									'passwordHasher' => 'Blowfish'
+							)
+					),
+					'authorize' => array('Controller')
+			)
+	);
+
+	public function isAuthorized($user) {
+		// Admin can access every action
+		if (isset($user['role']) && $user['role'] === 'admin') {
+			return true;
+		}
+		$this->Session->setFlash(__('You Do Not Have Access To This Area.'), 'failure');
+		// Default deny
+		return false;
+	}
+
+
+	protected function _populateSearchArray(){
+			
+		$data = array();
+			
+			
+		if(isset($this->passedArgs['Search.operation_type']) && "Clear" == $this->passedArgs['Search.operation_type']) {
+			$this->passedArgs = array();
+			$url['action'] = 'admin_index';
+			$this->redirect($url, null, true);
+		}
+
+		foreach ($this->searchFields as $field => $options){
+
+			if(isset($this->passedArgs['Search.'.$field]) ) {
+				if ($this->passedArgs['Search.'.$field] !="") {
+					$operator = ' = ';
+					$field_value = $this->passedArgs['Search.'.$field];
+					if(isset($options['type'])){
+						switch ($options['type']){
+							case 'text':
+								$operator = ' LIKE ';
+								$field_value = "{$field_value}%";
+								break;
+
+						}
+
+					}
+					$this->Paginator->settings['conditions'][][$this->modelClass.'.'.$field.' '.$operator.' '] = "{$field_value}";
+				}
+				$data[$field] = $this->passedArgs['Search.'.$field];
+			}else{
+				$data[$field] = '';
+			}
+
+		}
+			
+		return $data;
+			
+
+	}
+
+	public function beforeFilter(){
 		$this->helpers = array(
 				'Paginator' => array(
 						'className' => 'NewPaginator'
@@ -73,23 +117,45 @@ class AppController extends Controller {
 		);
 		$this->Auth->allow('name', 'view', 'index');
 	}
-	
-	public function name($id=null, $slug = null){
-	
-		if (!isset($this->Menu)) {
-	
-			$this->loadModel('Menu');
-	
+
+
+	/**
+	 * search method
+	 *
+	 * @return void
+	 */
+	public function admin_search() {
+		// the page we will redirect to
+		$url['action'] = 'admin_index';
+
+		foreach ($this->data as $k=>$v){
+			foreach ($v as $kk=>$vv){
+				$url[$k.'.'.$kk]=$vv;
+			}
 		}
-	
+
+		// redirect the user to the url
+		$this->redirect($url, null, true);
+	}
+
+
+
+	public function name($id=null, $slug = null){
+
+		if (!isset($this->Menu)) {
+
+			$this->loadModel('Menu');
+
+		}
+
 		if (!$this->Menu->exists($id)) {
 			throw new NotFoundException(__('Invalid menu'));
 		}
-	
+
 		$menu = $this->Menu->find('first', array('conditions' => array('Menu.id'=>$id)));
-	
+
 		$this->view($menu['Menu']['parent_id']);
 		$this->render('view');
-	}	
+	}
 
 }

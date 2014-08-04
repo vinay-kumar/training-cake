@@ -5,20 +5,20 @@ App::uses('AppController', 'Controller');
  *
  * @property Page $Page
  * @property PaginatorComponent $Paginator
- */
+*/
 class PagesController extends AppController {
 
-/**
- * Components
- *
- * @var array
- */
+	/**
+	 * Components
+	 *
+	 * @var array
+	 */
 	public $components = array('Paginator');
-	
+
 	public $helpers = array('Js' => array('Jquery'));
 
 
-
+	public $searchFields = array('name'=>array('type'=>'text'), 'status'=>array('type'=>'options'));
 
 
 
@@ -28,7 +28,7 @@ class PagesController extends AppController {
 		if ($this->action === 'add') {
 			return true;
 		}
-	
+
 		// The owner of a post can edit and delete it
 		if (in_array($this->action, array('edit', 'delete'))) {
 			$postId = (int) $this->request->params['pass'][0];
@@ -36,30 +36,42 @@ class PagesController extends AppController {
 				return true;
 			}
 		}
-	
+
 		return parent::isAuthorized($user);
 	}
 
 
+	/**
+	 * index method
+	 *
+	 * @return void
+	 */
+	public function admin_index() {
+
+		$this->set("search_data" , $this->_populateSearchArray());
+ 
+		$this->Page->recursive = 0;
+		$this->set('pages', $this->Paginator->paginate());
+	}
 
 
-/**
- * index method
- *
- * @return void
- */
+	/**
+	 * index method
+	 *
+	 * @return void
+	 */
 	public function index() {
 		$this->Page->recursive = 0;
 		$this->set('pages', $this->Paginator->paginate());
 	}
 
-/**
- * view method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
+	/**
+	 * view method
+	 *
+	 * @throws NotFoundException
+	 * @param string $id
+	 * @return void
+	 */
 	public function view($id = null) {
 		if (!$this->Page->exists($id)) {
 			throw new NotFoundException(__('Invalid page'));
@@ -68,11 +80,11 @@ class PagesController extends AppController {
 		$this->set('page', $this->Page->find('first', $options));
 	}
 
-/**
- * add method
- *
- * @return void
- */
+	/**
+	 * add method
+	 *
+	 * @return void
+	 */
 	public function add() {
 		if ($this->request->is('post')) {
 			$this->Page->create();
@@ -88,13 +100,13 @@ class PagesController extends AppController {
 		$this->set(compact('users', 'pageGroups'));
 	}
 
-/**
- * edit method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
+	/**
+	 * edit method
+	 *
+	 * @throws NotFoundException
+	 * @param string $id
+	 * @return void
+	 */
 	public function edit($id = null) {
 		if (!$this->Page->exists($id)) {
 			throw new NotFoundException(__('Invalid page'));
@@ -116,13 +128,13 @@ class PagesController extends AppController {
 		$this->set(compact('users', 'pageGroups'));
 	}
 
-/**
- * delete method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
+	/**
+	 * delete method
+	 *
+	 * @throws NotFoundException
+	 * @param string $id
+	 * @return void
+	 */
 	public function delete($id = null) {
 		$this->Page->id = $id;
 		if (!$this->Page->exists()) {
@@ -146,12 +158,12 @@ class PagesController extends AppController {
 	 *	or MissingViewException in debug mode.
 	 */
 	public function admin_display() {
-		
+
 	}
-	
-	
+
+
 	public function check(){
-	
+
 	}
-	
+
 }
