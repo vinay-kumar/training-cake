@@ -56,4 +56,10 @@ class Page extends AppModel {
 			'order' => ''
 		)
 	);
+	
+	
+	public function isOwnedBy($page_id, $user_id) {
+		return $this->field('id', array('id' => $page_id, 'user_id' => $user_id)) !== false;
+	}
+	
 }
