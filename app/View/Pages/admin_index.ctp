@@ -1,17 +1,4 @@
-<?php echo $this->Form->create('Page',array('action'=>'search'));?>
-    <fieldset>
-        <legend><?php echo __('Page Search');?></legend>
-        <table class="table"  cellpadding="0" cellspacing="0"><tr>
-		<td><?php echo $this->Form->input('Search.name', array('class'=>"form-control", 'value'=>$search_data['name']));?></td>
-		<td>    <?php echo $this->Form->input('Search.status', array('class'=>"form-control", 'options'=>array('Active'=>'Active', 'Inactive'=>'Inactive'), 'empty'=>true, 'selected'=>$search_data['status']));?></td>
-        <td><?php echo $this->Form->submit('Search');?></td>
-        <td><?php echo $this->Form->submit('Clear', array('onclick'=>"document.getElementById('SearchOperationType').value='Clear';"));?>
-        <?php echo $this->Form->input('Search.operation_type', array('type'=>'hidden', 'value'=>'Search'));?>
-        </td>
-    </table>
-    </fieldset>
-<?php echo $this->Form->end();?>
-
+<?php echo $this->SearchForm->create_form('Page', $search_data);?>
 
 
 <div class="container">

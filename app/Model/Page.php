@@ -15,6 +15,9 @@ class Page extends AppModel {
  */
 	public $displayField = 'name';
 
+	
+	public $searchFields = array('name'=>array('type'=>'text'), 'status'=>array('type'=>'options'));
+	
 /**
  * Validation rules
  *

@@ -15,11 +15,7 @@ class PagesController extends AppController {
 	 */
 	public $components = array('Paginator');
 
-	public $helpers = array('Js' => array('Jquery'));
-
-
-	public $searchFields = array('name'=>array('type'=>'text'), 'status'=>array('type'=>'options'));
-
+	public $helpers = array('Js' => array('Jquery'), 'SearchForm');
 
 
 

@@ -33,8 +33,6 @@ App::uses('Controller', 'Controller');
 class AppController extends Controller {
 
 
-	public $searchFields = array();
-
 
 	public $components = array(
 			'Session',
@@ -79,7 +77,8 @@ class AppController extends Controller {
 			$this->redirect($url, null, true);
 		}
 
-		foreach ($this->searchFields as $field => $options){
+		$modelClass = $this->modelClass;
+		foreach ($this->$modelClass->searchFields as $field => $options){
 
 			if(isset($this->passedArgs['Search.'.$field]) ) {
 				if ($this->passedArgs['Search.'.$field] !="") {
