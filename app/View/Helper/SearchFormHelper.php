@@ -25,8 +25,10 @@ class SearchFormHelper extends FormHelper {
 			
 			
 		}
-		$string_form .= $this->submit('Search');
-		$string_form .= $this->submit('Clear', array('onclick'=>"document.getElementById('SearchOperationType').value='Clear';"));
+		$string_form .= $this->input('Search.operation_type', array('type'=>"hidden"));
+		$string_form .= $this->submit('Search', array('class'=>'btn btn-primary'));
+		
+		$string_form .= $this->submit('Clear', array('class'=>'btn btn-warning', 'onclick'=>"document.getElementById('SearchOperationType').value='Clear';"));
 		$string_form .= $this->end();
 		
 		return $string_form;

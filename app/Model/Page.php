@@ -16,7 +16,12 @@ class Page extends AppModel {
 	public $displayField = 'name';
 
 	
-	public $searchFields = array('name'=>array('type'=>'text'), 'status'=>array('type'=>'options'));
+	public $searchFields = array(
+			'name'=>array('type'=>'text'), 
+			'status'=>array('type'=>'options'),
+			'page_group_id'=>array('type'=>'text', 'table' => 'page_groups')
+			
+	);
 	
 /**
  * Validation rules

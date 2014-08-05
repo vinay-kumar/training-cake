@@ -94,7 +94,12 @@ class AppController extends Controller {
 						}
 
 					}
-					$this->Paginator->settings['conditions'][][$this->modelClass.'.'.$field.' '.$operator.' '] = "{$field_value}";
+					if (isset($options['table'])) {
+						//$modelClass = Inflector::classify($options['table']);
+						$this->Paginator->settings['conditions'][][Inflector::classify($options['table']).'.name '.$operator.' '] = "{$field_value}";
+					}else{
+						$this->Paginator->settings['conditions'][][$modelClass.'.'.$field.' '.$operator.' '] = "{$field_value}";
+					}
 				}
 				$data[$field] = $this->passedArgs['Search.'.$field];
 			}else{
