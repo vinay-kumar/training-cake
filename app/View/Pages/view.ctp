@@ -9,6 +9,7 @@
 
 <p>created by: <?php echo $this->Html->link($page['User']['username'], array('controller' => 'users', 'action' => 'view', $page['User']['id'])); ?> on <?php echo h($page['Page']['created']); ?> updated on <?php echo h($page['Page']['modified']); ?></p>
 
+<?php echo $this->Html->link(__('PDF'), array('action' => 'view_pdf', 'ext' => 'pdf', $page['Page']['id'])); ?>
 
 <?php
 	$this->start('left_area');

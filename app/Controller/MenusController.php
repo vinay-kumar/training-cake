@@ -60,6 +60,10 @@ class MenusController extends AppController {
  * @return void
  */
 	public function index() {
+		//$this->Menu->removeFromTree(14, true);
+		//debug($this->Menu->generateTreeList());
+		
+		//debug($this->Menu->getPath(13));
 		$this->Menu->recursive = 0;
 		$this->set('menus', $this->Paginator->paginate());
 	}
@@ -75,6 +79,7 @@ class MenusController extends AppController {
 		if (!$this->Menu->exists($id)) {
 			throw new NotFoundException(__('Invalid menu'));
 		}
+		$this->Menu->locale = array('en_uk', 'en_us');
 		$options = array('conditions' => array('Menu.' . $this->Menu->primaryKey => $id));
 		$this->set('menu', $this->Menu->find('first', $options));
 	}
@@ -95,7 +100,8 @@ class MenusController extends AppController {
 			}
 		}
 		$users = $this->Menu->User->find('list');
-		$this->set(compact('users'));
+		$parent_menu = $this->Menu->generateTreeList(null, null, null, " - ");
+		$this->set(compact('users', 'parent_menu'));
 	}
 
 /**
@@ -110,6 +116,7 @@ class MenusController extends AppController {
 			throw new NotFoundException(__('Invalid menu'));
 		}
 		if ($this->request->is(array('post', 'put'))) {
+			$this->Menu->locale = 'en_uk';
 			if ($this->Menu->save($this->request->data)) {
 				$this->Session->setFlash(__('The menu has been saved.'));
 				return $this->redirect(array('action' => 'index'));
@@ -121,7 +128,8 @@ class MenusController extends AppController {
 			$this->request->data = $this->Menu->find('first', $options);
 		}
 		$users = $this->Menu->User->find('list');
-		$this->set(compact('users'));
+		$parent_menu = $this->Menu->generateTreeList(null, null, null, " - ");
+		$this->set(compact('users', 'parent_menu'));
 	}
 
 /**
@@ -143,4 +151,6 @@ class MenusController extends AppController {
 			$this->Session->setFlash(__('The menu could not be deleted. Please, try again.'));
 		}
 		return $this->redirect(array('action' => 'index'));
-	}}
+	}
+
+}

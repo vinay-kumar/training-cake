@@ -46,7 +46,7 @@ class PageGroup extends AppModel {
 			'foreignKey' => 'user_id',
 			'conditions' => '',
 			'fields' => '',
-			'order' => ''
+			'order' => '',
 		)
 	);
 
@@ -66,7 +66,7 @@ class PageGroup extends AppModel {
 			'limit' => '',
 			'offset' => '',
 			'exclusive' => '',
-			'finderQuery' => '',
+			//'finderQuery' => 'SELECT Page.id, Page.page_group_id, Page.name FROM pages as Page WHERE Page.page_group_id = {$__cakeID__$} ',
 			'counterQuery' => ''
 		)
 	);

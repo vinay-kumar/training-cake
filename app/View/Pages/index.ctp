@@ -1,3 +1,4 @@
+
 <div class="container">
 	<h2><?php echo __('Pages'); ?></h2>
 	<table class="table table-hover" cellpadding="0" cellspacing="0">

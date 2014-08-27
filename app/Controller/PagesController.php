@@ -7,17 +7,54 @@ App::uses('AppController', 'Controller');
  * @property PaginatorComponent $Paginator
 */
 class PagesController extends AppController {
-
+	//public $components = array();
 	/**
 	 * Components
 	 *
 	 * @var array
 	 */
-	public $components = array('Paginator');
+	public $components = array('Paginator','RequestHandler');
 
 	public $helpers = array('Js' => array('Jquery'), 'SearchForm');
 
-
+	public function testcases(){
+		//App::uses('HtmlHelper', 'View/Helper');
+		//debug(App::path('View'));
+		//debug(App::paths());
+		//debug(App::core('Cache/Engine'));
+		//debug(App::location('Page'));
+		
+		//App::build(array('Model' => array('/a/full/path/to/models/')));
+		//debug(App::path('Model'));
+		
+		//will setup the path as the only valid path for searching models
+		//App::build(array('Model' => array('/path/to/models/')), App::RESET);
+		//debug(App::path('Model'));
+		
+		//will setup multiple search paths for helpers
+		//App::build(array(
+		//'View/Helper' => array('/path/to/helpers/', '/another/path/')
+		//));
+		
+		//New Package Addition
+		//App::build(array(
+		//'Service' => array('%s' . 'Service' . DS)
+		//), App::REGISTER);
+		
+		
+		//debug(App::paths());
+		
+		
+		
+		
+		//debug(App::objects('controller'));
+		
+		//debug(App::pluginPath('Testing'));
+		
+		App::import('Controller', 'Users', array('file'=>'a/a.php'));
+		
+		exit;
+	}
 
 	public function isAuthorized($user) {
 		// All registered users can add posts
@@ -58,9 +95,21 @@ class PagesController extends AppController {
 	 */
 	public function index() {
 		$this->Page->recursive = 0;
+		
 		$this->set('pages', $this->Paginator->paginate());
+		$this->set('_serialize', array('pages'));
+		
+		
 	}
-
+	public function view_pdf($id = null) {
+		$this->Page->id = $id;
+		if (!$this->Page->exists()) {
+			throw new NotFoundException(__('Invalid post'));
+		}
+		// increase memory limit in PHP
+		ini_set('memory_limit', '512M');
+		$this->set('page', $this->Page->find('first', $id));
+	}
 	/**
 	 * view method
 	 *

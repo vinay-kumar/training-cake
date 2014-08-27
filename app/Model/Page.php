@@ -61,7 +61,10 @@ class Page extends AppModel {
 			'foreignKey' => 'page_group_id',
 			'conditions' => '',
 			'fields' => '',
-			'order' => ''
+			'order' => '',
+			'counterCache' => 'page_new_count',
+			'counterScope' => array('Page.status' => 'Active'),
+				
 		)
 	);
 	

@@ -156,7 +156,6 @@
  *
  */
 	//Configure::write('Cache.disable', true);
-
 /**
  * Enable cache checking.
  *

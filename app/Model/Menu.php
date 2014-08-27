@@ -14,6 +14,13 @@ class Menu extends AppModel {
  */
 	public $displayField = 'name';
 
+	
+	public $actsAs = array(
+			'Tree' => array(
+					'parent'=>'parent_menu'
+			),
+			'Translate' => array('name')
+	);
 /**
  * Validation rules
  *

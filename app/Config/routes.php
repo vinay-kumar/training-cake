@@ -24,6 +24,8 @@
  * its action called 'display', and we pass a param to select the view file
  * to use (in this case, /app/View/Pages/home.ctp)...
  */
+	Router::parseExtensions('json', 'pdf');
+
 	Router::connect('/', array('controller' => 'menus', 'action' => 'default_page'));
 /**
  * ...and connect the rest of 'Pages' controller's URLs.
@@ -39,7 +41,6 @@
  * how to customize the loading of plugin routes.
  */
 	CakePlugin::routes();
-
 /**
  * Load the CakePHP default routes. Only remove this if you do not want to use
  * the built-in default routes.
