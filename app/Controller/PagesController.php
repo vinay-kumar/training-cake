@@ -97,7 +97,7 @@ class PagesController extends AppController {
 		$this->Page->recursive = 0;
 		
 		$this->set('pages', $this->Paginator->paginate());
-		$this->set('_serialize', array('pages'));
+		//$this->set('_serialize', array('pages'));
 		
 		
 	}

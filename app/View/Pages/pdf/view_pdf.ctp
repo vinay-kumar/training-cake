@@ -1,1 +1,3 @@
-<p>Hi</p>
+<?php 
+	debug($page);
+?>
